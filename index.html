@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IP V4</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Calculadora de IP V4</h1>
+
+    <form id="ipForm">
+        <label for="ip">IP (formato X.X.X.X):</label>
+        <input type="text" id="ip" name="ip" required placeholder="Ingrese IP en formato decimal">
+
+        <label for="mascara">Máscara de subred (ej: 24):</label>
+        <input type="text" id="mascara" name="mascara" required placeholder="Ingrese máscara de subred">
+
+        <button type="button" onclick="calcularIP()">Calcular</button>
+    </form>
+
+    <div class="resultados" id="resultados"></div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
