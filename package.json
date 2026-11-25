@@ -1,0 +1,28 @@
+{
+  "name": "calculadora-ipv4",
+  "version": "1.0.0",
+  "description": "Herramienta web para explorar el direccionamiento IPv4 a partir de una dirección y la longitud de su prefijo de red. Los cálculos se ejecutan en el navegador con JavaScript.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Danniel0663/CalculadoraIPV4.git"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Danniel0663/CalculadoraIPV4/issues"
+  },
+  "homepage": "https://github.com/Danniel0663/CalculadoraIPV4#readme",
+  "dependencies": {
+    "@fontsource-variable/manrope": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.13",
+    "tailwindcss": "^4.3.5"
+  }
+}

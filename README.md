@@ -1,15 +1,11 @@
 # Calculadora IPv4
 
-Herramienta web para explorar el direccionamiento IPv4 a partir de una dirección y la longitud de su prefijo de red. Los cálculos se ejecutan en el navegador con JavaScript.
+[Usar la calculadora](https://danniel0663.github.io/CalculadoraIPV4/)
 
-## Prueba la calculadora
+Introduce una IPv4 y un prefijo CIDR para consultar la dirección de red, la máscara, el broadcast y el rango de hosts. La vista binaria distingue los bits de red y host por octeto. Los cálculos se realizan en el navegador. Para /31 se consideran enlaces punto a punto y para /32 una dirección individual.
 
-[Abre la calculadora en GitHub Pages](https://danniel0663.github.io/CalculadoraIPV4/) o descarga el proyecto y abre `index.html` en tu navegador.
+## Desarrollo
 
-1. Escribe una dirección en formato decimal, por ejemplo `192.168.1.10`.
-2. Introduce la longitud del prefijo, por ejemplo `24` para una máscara de `255.255.255.0`.
-3. Pulsa **Calcular**. Cambia el prefijo a `25` y compara los resultados para la misma dirección.
+Con Node.js 24, ejecuta `npm ci` y `npm run dev`. La página y los estilos están en `src/`. Usa `npm run build` para compilar con Astro y Tailwind CSS y `npm run preview` para revisar el resultado.
 
-## Código
-
-El [formulario](index.html) recoge la dirección y el prefijo. La [lógica de cálculo](script.js) procesa los valores y la [hoja de estilos](styles.css) define la presentación.
+GitHub Pages sirve los archivos estáticos desde la raíz. Al publicar una nueva compilación, sincroniza `dist/index.html` y `dist/assets/` con sus equivalentes en la raíz.
