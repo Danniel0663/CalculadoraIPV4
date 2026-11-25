@@ -2,21 +2,19 @@
 import '@fontsource-variable/manrope';
 import '@fontsource/ibm-plex-mono/latin-400.css';
 import '../style.css';
-import { calculate } from '../lib/network.js';
-const initial = calculate('192.168.1.10',24);
 const fields = [['network','Dirección de red'],['broadcast','Broadcast'],['mask','Máscara de subred'],['hosts','Hosts utilizables'],['first','Primer host'],['last','Último host']];
 ---
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="theme-color" content="#171c39"/><title>Calculadora IPv4 · Subred</title></head>
 <body>
-<header><div class="wrap flex items-center justify-between"><a class="brand" href="#inicio"><span class="logo" aria-hidden="true">⌘</span> Subred</a><nav class="flex gap-6"><a href="#config">Calculadora</a><a href="#bits">Vista binaria</a></nav></div></header>
+<header><div class="wrap flex items-center justify-between"><a class="brand" href="#inicio"><span class="logo" aria-hidden="true">⌘</span> Subred</a><nav class="flex gap-6"><a href="#config">Calculadora</a><a href="#bits" data-output hidden>Vista binaria</a></nav></div></header>
 <main id="inicio" class="wrap">
 <section class="hero"><div><h1>Calculadora <em>IPv4</em></h1><p>Explora tu subred, el rango de hosts y su representación binaria.</p></div>
 <svg class="diagram" viewBox="0 0 280 120" aria-hidden="true"><g fill="none" stroke="#7772a6" stroke-width="2"><path d="M10 60h64l36-35h54l35 35h70M74 60l36 35h54l35-35M74 60h125"/></g>{[[10,60],[74,60],[110,25],[164,25],[199,60],[269,60],[110,95],[164,95]].map(([x,y],i)=><rect x={x-4} y={y-4} width="8" height="8" rx="2" fill={i===1||i===4?'#ffc393':'#b4a2f5'}/>)}</svg></section>
 <div class="layout grid gap-5">
-<section class="panel config" id="config"><h2>Configurar subred</h2><form><label for="ip">Dirección IPv4</label><input id="ip" value="192.168.1.10" autocomplete="off" spellcheck="false" aria-describedby="error"/><p id="error" role="alert"></p><label for="prefix">Prefijo de red (CIDR)</label><select id="prefix">{Array.from({length:33},(_,n)=><option selected={n===24} value={n}>/{n}</option>)}</select><button>Calcular subred <span aria-hidden="true">→</span></button></form></section>
-<section class="panel"><div class="flex flex-wrap items-center justify-between gap-2"><h2>Resultado de la subred</h2><code class="chip" data-key="cidr">{initial.cidr}</code></div><dl class="metrics grid grid-cols-1 sm:grid-cols-2">{fields.map(([key,label])=><div><dt>{label}</dt><dd data-key={key}>{initial[key]}</dd></div>)}</dl><div class="meta">Clase <b data-key="group">{initial.group}</b><span>·</span><b data-key="scope">{initial.scope}</b></div></section></div>
-<section id="bits" class="panel binary"><div class="flex flex-wrap items-center justify-between gap-3"><h2>Vista binaria</h2><div class="legend"><i></i>Red <i></i>Host</div></div><div class="octets grid grid-cols-2 md:grid-cols-4 gap-3">{initial.bits.match(/.{8}/g).map((bits,i)=><div><small>Octeto {i+1}</small><code>{[...bits].map((bit,j)=><span class:list={{host:i*8+j>=24}}>{bit}</span>)}</code></div>)}</div></section>
+<section class="panel config" id="config"><h2>Configurar subred</h2><form><label for="ip">Dirección IPv4</label><input id="ip" required autocomplete="off" spellcheck="false" aria-describedby="error"/><p id="error" role="alert"></p><label for="prefix">Prefijo de red (CIDR)</label><select id="prefix" required autocomplete="off"><option value="" selected disabled>Selecciona un prefijo</option>{Array.from({length:33},(_,n)=><option value={n}>/{n}</option>)}</select><button>Calcular subred <span aria-hidden="true">→</span></button></form></section>
+<section class="panel" data-output hidden><div class="flex flex-wrap items-center justify-between gap-2"><h2>Resultado de la subred</h2><code class="chip" data-key="cidr"></code></div><dl class="metrics grid grid-cols-1 sm:grid-cols-2">{fields.map(([key,label])=><div><dt>{label}</dt><dd data-key={key}></dd></div>)}</dl><div class="meta">Clase <b data-key="group"></b><span>·</span><b data-key="scope"></b></div></section></div>
+<section id="bits" data-output hidden class="panel binary"><div class="flex flex-wrap items-center justify-between gap-3"><h2>Vista binaria</h2><div class="legend"><i></i>Red <i></i>Host</div></div><div class="octets grid grid-cols-2 md:grid-cols-4 gap-3">{Array.from({length:4},(_,i)=><div><small>Octeto {i+1}</small><code>{Array.from({length:8},()=><span></span>)}</code></div>)}</div></section>
 <p id="status" role="status" class="sr-only"></p></main>
 <script>
 import { calculate } from '../lib/network.js';
@@ -32,6 +30,7 @@ document.querySelector('form')!.addEventListener('submit',event=>{
       el.textContent=result.bits[i];
       el.classList.toggle('host',i>=prefix);
     });
+    document.querySelectorAll<HTMLElement>('[data-output]').forEach(el => el.hidden = false);
     error.textContent='';
     ip.removeAttribute('aria-invalid');
     document.querySelector('#status')!.textContent='Resultado actualizado para '+result.cidr;

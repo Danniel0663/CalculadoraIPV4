@@ -41,3 +41,4 @@ dd {margin-top:2px;font-size:17px}
 .legend i:nth-child(2) {background:#904615;margin-left:8px}
 @media(max-width:760px){.layout{grid-template-columns:1fr}.hero{padding:25px}.diagram{display:none}.panel{padding:20px}}
 @media(max-width:420px){nav{gap:12px;font-size:12px}.octets div{padding:10px}.hero{padding:21px}}
+.layout:has([data-output][hidden]) {grid-template-columns:minmax(0, 540px);justify-content:center}
